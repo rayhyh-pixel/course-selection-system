@@ -3,8 +3,36 @@
 .courseManagePage {
   min-height: 100vh;
   background: $color-bg-page;
-  padding: $spacing-lg $page-padding;
   padding-bottom: 140rpx;
+}
+
+// 头部（返回按钮+标题）
+.header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.backBtn {
+  @include button-reset;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-round;
+  font-size: $font-size-xl;
+  color: $color-primary;
+  margin-right: $spacing-lg;
+  
+  &:active {
+    background: rgba($color-primary, 0.2);
+    transform: scale(0.95);
+  }
 }
 
 // 页面标题
@@ -12,8 +40,6 @@
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
   color: $color-text-primary;
-  margin-bottom: $spacing-xl;
-  text-align: center;
 }
 
 // 表单卡片

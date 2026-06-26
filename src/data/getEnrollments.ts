@@ -7,6 +7,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_001',
     courseTitle: 'Web前端开发实战',
     teacher: '张老师',
+    studentName: '张三',
+    studentPhone: '13800138001',
+    studentId: '2024001',
     status: 'pending',
     createTime: new Date('2024-01-15 09:30:00'),
     updateTime: new Date('2024-01-15 09:30:00')
@@ -17,6 +20,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_003',
     courseTitle: '人工智能基础',
     teacher: '王老师',
+    studentName: '李四',
+    studentPhone: '13800138002',
+    studentId: '2024002',
     status: 'pending',
     createTime: new Date('2024-01-15 10:15:00'),
     updateTime: new Date('2024-01-15 10:15:00')
@@ -27,6 +33,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_005',
     courseTitle: '数据库设计与优化',
     teacher: '孙老师',
+    studentName: '王五',
+    studentPhone: '13800138003',
+    studentId: '2024003',
     status: 'pending',
     createTime: new Date('2024-01-15 11:00:00'),
     updateTime: new Date('2024-01-15 11:00:00')
@@ -37,6 +46,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_007',
     courseTitle: '云计算与分布式系统',
     teacher: '吴老师',
+    studentName: '赵六',
+    studentPhone: '13800138004',
+    studentId: '2024004',
     status: 'pending',
     createTime: new Date('2024-01-15 14:20:00'),
     updateTime: new Date('2024-01-15 14:20:00')
@@ -47,6 +59,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_001',
     courseTitle: 'Web前端开发实战',
     teacher: '张老师',
+    studentName: '钱七',
+    studentPhone: '13800138005',
+    studentId: '2024005',
     status: 'approved',
     createTime: new Date('2024-01-14 08:30:00'),
     updateTime: new Date('2024-01-14 09:00:00')
@@ -57,6 +72,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_002',
     courseTitle: 'Python数据分析',
     teacher: '李老师',
+    studentName: '孙八',
+    studentPhone: '13800138006',
+    studentId: '2024006',
     status: 'approved',
     createTime: new Date('2024-01-14 10:00:00'),
     updateTime: new Date('2024-01-14 10:30:00')
@@ -67,6 +85,9 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_008',
     courseTitle: '网络安全技术',
     teacher: '郑老师',
+    studentName: '周九',
+    studentPhone: '13800138007',
+    studentId: '2024007',
     status: 'rejected',
     createTime: new Date('2024-01-13 15:00:00'),
     updateTime: new Date('2024-01-13 16:00:00'),
@@ -78,37 +99,38 @@ export const mockEnrollments: Enrollment[] = [
     courseId: 'course_009',
     courseTitle: '机器学习算法',
     teacher: '陈老师',
+    studentName: '吴十',
+    studentPhone: '13800138008',
+    studentId: '2024008',
     status: 'rejected',
     createTime: new Date('2024-01-12 09:00:00'),
     updateTime: new Date('2024-01-12 10:00:00'),
-    reason: '课程已关闭报名'
+    reason: '课程已关闭'
   },
   {
     _id: 'enroll_009',
     _openid: 'user_009',
     courseId: 'course_004',
     courseTitle: '移动应用开发',
-    teacher: '赵老师',
+    teacher: '刘老师',
+    studentName: '郑十一',
+    studentPhone: '13800138009',
+    studentId: '2024009',
     status: 'approved',
-    createTime: new Date('2024-01-11 11:00:00'),
-    updateTime: new Date('2024-01-11 11:30:00')
+    createTime: new Date('2024-01-14 14:00:00'),
+    updateTime: new Date('2024-01-14 15:00:00')
   },
   {
     _id: 'enroll_010',
     _openid: 'user_010',
     courseId: 'course_006',
     courseTitle: '软件工程原理',
-    teacher: '周老师',
-    status: 'cancelled',
-    createTime: new Date('2024-01-10 14:00:00'),
-    updateTime: new Date('2024-01-11 09:00:00')
+    teacher: '黄老师',
+    studentName: '王小明',
+    studentPhone: '13800138010',
+    studentId: '2024010',
+    status: 'approved',
+    createTime: new Date('2024-01-13 11:00:00'),
+    updateTime: new Date('2024-01-13 12:00:00')
   }
 ];
-
-export default function getEnrollments(data: { status?: string } = {}) {
-  let result = [...mockEnrollments];
-  if (data.status) {
-    result = result.filter(e => e.status === data.status);
-  }
-  return { code: 0, message: 'success', data: result };
-}

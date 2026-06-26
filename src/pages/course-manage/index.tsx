@@ -7,7 +7,6 @@ import { Course } from '@/types';
 import { mockCourseDetails } from '@/data/getCourseDetail';
 
 const CourseManagePage = () => {
-  // 表单数据
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -17,43 +16,37 @@ const CourseManagePage = () => {
     capacity: ''
   });
 
-  // 课程列表
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // 加载课程列表
+  // 加载课程列表（从 localStorage 和 mock 数据合并）
   const loadCourses = async () => {
     try {
       setLoading(true);
-      // H5环境：使用mock数据
-      const courseList = Object.values(mockCourseDetails);
-      setCourses(courseList);
       
-      // 微信环境：调用云函数
-      // if (process.env.TARO_ENV === 'weapp') {
-      //   const result = await Taro.cloud.callFunction({
-      //     name: 'getCourses',
-      //     data: {}
-      //   });
-      //   const data = result.result as any;
-      //   if (data.code === 0) {
-      //     setCourses(data.data.courses);
-      //   }
-      // }
+      // 获取 localStorage 中的自定义课程
+      const customCoursesStr = Taro.getStorageSync('customCourses') || '[]';
+      const customCourses: Course[] = JSON.parse(customCoursesStr);
+      
+      // 合并 mock 数据和自定义课程
+      const mockList = Object.values(mockCourseDetails);
+      const allCourses = [...mockList, ...customCourses];
+      
+      setCourses(allCourses);
     } catch (err) {
       console.error('[CourseManagePage] Load courses failed:', err);
+      // 出错时使用默认 mock 数据
+      setCourses(Object.values(mockCourseDetails));
     } finally {
       setLoading(false);
     }
   };
 
-  // 初始化
   useEffect(() => {
     loadCourses();
   }, []);
 
-  // 更新表单字段
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -61,19 +54,14 @@ const CourseManagePage = () => {
     }));
   };
 
-  // 选择开始时间
   const handleStartTimeChange = (e: any) => {
-    const value = e.detail.value;
-    handleInputChange('startTime', value);
+    handleInputChange('startTime', e.detail.value);
   };
 
-  // 选择结束时间
   const handleEndTimeChange = (e: any) => {
-    const value = e.detail.value;
-    handleInputChange('endTime', value);
+    handleInputChange('endTime', e.detail.value);
   };
 
-  // 表单验证
   const validateForm = (): boolean => {
     if (!formData.title.trim()) {
       Taro.showToast({ title: '请输入课程名称', icon: 'none' });
@@ -102,47 +90,67 @@ const CourseManagePage = () => {
     return true;
   };
 
-  // 保存课程
+  // 保存课程到 localStorage
+  const saveCourseToStorage = (course: Course) => {
+    const customCoursesStr = Taro.getStorageSync('customCourses') || '[]';
+    const customCourses: Course[] = JSON.parse(customCoursesStr);
+    
+    // 检查是否已存在（更新）
+    const index = customCourses.findIndex(c => c._id === course._id);
+    if (index >= 0) {
+      customCourses[index] = course;
+    } else {
+      customCourses.push(course);
+    }
+    
+    Taro.setStorageSync('customCourses', JSON.stringify(customCourses));
+  };
+
+  // 删除课程从 localStorage
+  const deleteCourseFromStorage = (courseId: string) => {
+    const customCoursesStr = Taro.getStorageSync('customCourses') || '[]';
+    const customCourses: Course[] = JSON.parse(customCoursesStr);
+    const filtered = customCourses.filter(c => c._id !== courseId);
+    Taro.setStorageSync('customCourses', JSON.stringify(filtered));
+  };
+
   const handleSave = async () => {
     if (!validateForm()) return;
 
-    // 确认保存
     Taro.showModal({
       title: '确认保存',
       content: editingId ? '确定要更新此课程吗？' : '确定要创建新课程吗？',
       success: async (res) => {
         if (res.confirm) {
           try {
-            if (editingId) {
-              // 更新课程
-              // H5环境：模拟更新
-              Taro.showToast({ title: '课程更新成功', icon: 'success' });
-              
-              // 微信环境：调用云函数
-              // const result = await Taro.cloud.callFunction({
-              //   name: 'updateCourse',
-              //   data: {
-              //     courseId: editingId,
-              //     ...formData,
-              //     capacity: parseInt(formData.capacity)
-              //   }
-              // });
-            } else {
-              // 创建课程
-              // H5环境：模拟创建
-              Taro.showToast({ title: '课程创建成功', icon: 'success' });
-              
-              // 微信环境：调用云函数
-              // const result = await Taro.cloud.callFunction({
-              //   name: 'createCourse',
-              //   data: {
-              //     ...formData,
-              //     capacity: parseInt(formData.capacity)
-              //   }
-              // });
-            }
-            
-            // 重置表单
+            const now = new Date();
+            const newCourse: Course = {
+              _id: editingId || `course_${Date.now()}`,
+              title: formData.title,
+              description: formData.description,
+              teacher: formData.teacher || '未知教师',
+              teacherTitle: '',
+              teacherIntro: '',
+              capacity: parseInt(formData.capacity),
+              enrolled: 0,
+              startTime: formData.startTime,
+              endTime: formData.endTime,
+              status: 'open' as const,
+              category: '',
+              location: '',
+              schedule: '',
+              createTime: editingId ? now : now,
+              updateTime: now
+            };
+
+            // 保存到 localStorage
+            saveCourseToStorage(newCourse);
+
+            Taro.showToast({ 
+              title: editingId ? '课程更新成功' : '课程创建成功', 
+              icon: 'success' 
+            });
+
             setFormData({
               title: '',
               description: '',
@@ -152,8 +160,6 @@ const CourseManagePage = () => {
               capacity: ''
             });
             setEditingId(null);
-            
-            // 重新加载课程列表
             loadCourses();
           } catch (err) {
             console.error('[CourseManagePage] Save failed:', err);
@@ -164,7 +170,6 @@ const CourseManagePage = () => {
     });
   };
 
-  // 编辑课程
   const handleEdit = (course: Course) => {
     setFormData({
       title: course.title,
@@ -175,28 +180,24 @@ const CourseManagePage = () => {
       capacity: String(course.capacity)
     });
     setEditingId(course._id);
-    // 滚动到顶部
     Taro.pageScrollTo({ scrollTop: 0 });
   };
 
-  // 删除课程
   const handleDelete = (courseId: string, courseTitle: string) => {
+    // 检查是否是 mock 数据（不能删除）
+    if (mockCourseDetails[courseId]) {
+      Taro.showToast({ title: '示例课程不能删除', icon: 'none' });
+      return;
+    }
+
     Taro.showModal({
       title: '确认删除',
       content: `确定要删除课程"${courseTitle}"吗？此操作不可撤销。`,
       success: async (res) => {
         if (res.confirm) {
           try {
-            // H5环境：模拟删除
+            deleteCourseFromStorage(courseId);
             Taro.showToast({ title: '课程删除成功', icon: 'success' });
-            
-            // 微信环境：调用云函数
-            // const result = await Taro.cloud.callFunction({
-            //   name: 'deleteCourse',
-            //   data: { courseId }
-            // });
-            
-            // 重新加载课程列表
             loadCourses();
           } catch (err) {
             console.error('[CourseManagePage] Delete failed:', err);
@@ -207,29 +208,6 @@ const CourseManagePage = () => {
     });
   };
 
-  // 生成时间数组（用于picker）
-  const generateDateArray = () => {
-    const dates = [];
-    const now = new Date();
-    for (let i = 0; i < 365; i++) {
-      const date = new Date(now);
-      date.setDate(date.getDate() + i);
-      dates.push(date.toISOString().split('T')[0]);
-    }
-    return dates;
-  };
-
-  // 生成时间数组（小时和分钟）
-  const generateTimeArray = () => {
-    const times = [];
-    for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 30) {
-        times.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
-      }
-    }
-    return times;
-  };
-
   if (loading) {
     return (
       <View className={styles.courseManagePage}>
@@ -238,18 +216,25 @@ const CourseManagePage = () => {
     );
   }
 
+  const handleBack = () => {
+    Taro.navigateBack();
+  };
+
   return (
     <View className={styles.courseManagePage}>
-      {/* 页面标题 */}
-      <Text className={styles.pageTitle}>
-        {editingId ? '编辑课程' : '添加课程'}
-      </Text>
+      {/* 返回按钮和标题 */}
+      <View className={styles.header}>
+        <Button className={styles.backBtn} onClick={handleBack}>
+          ←
+        </Button>
+        <Text className={styles.pageTitle}>
+          {editingId ? '编辑课程' : '添加课程'}
+        </Text>
+      </View>
 
-      {/* 表单卡片 */}
       <View className={styles.formCard}>
         <Text className={styles.formSectionTitle}>课程信息</Text>
 
-        {/* 课程名称 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>课程名称</Text>
           <Input
@@ -260,7 +245,6 @@ const CourseManagePage = () => {
           />
         </View>
 
-        {/* 课程介绍 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>课程介绍</Text>
           <Textarea
@@ -273,7 +257,6 @@ const CourseManagePage = () => {
           <Text className={styles.hintText}>最多输入500字</Text>
         </View>
 
-        {/* 授课教师 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabelOptional}>授课教师</Text>
           <Input
@@ -284,7 +267,6 @@ const CourseManagePage = () => {
           />
         </View>
 
-        {/* 开课时间 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>开课时间</Text>
           <Picker
@@ -300,7 +282,6 @@ const CourseManagePage = () => {
           </Picker>
         </View>
 
-        {/* 结束时间 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>结束时间</Text>
           <Picker
@@ -316,7 +297,6 @@ const CourseManagePage = () => {
           </Picker>
         </View>
 
-        {/* 上课人数 */}
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>上课人数</Text>
           <Input
@@ -330,10 +310,8 @@ const CourseManagePage = () => {
         </View>
       </View>
 
-      {/* 分隔线 */}
       <View className={styles.divider} />
 
-      {/* 课程列表 */}
       <Text className={styles.listTitle}>课程列表</Text>
       {courses.length > 0 ? (
         <View>
@@ -358,7 +336,7 @@ const CourseManagePage = () => {
               </View>
               <View className={styles.courseItemInfo}>
                 <Text className={styles.courseItemInfoItem}>👨‍🏫 {course.teacher}</Text>
-                <Text className={styles.courseItemInfoItem}>📅 {course.startTime.split(' ')[0]} ~ {course.endTime.split(' ')[0]}</Text>
+                <Text className={styles.courseItemInfoItem}>📅 {course.startTime.split(' ')[0] || course.startTime} ~ {course.endTime.split(' ')[0] || course.endTime}</Text>
                 <Text className={styles.courseItemInfoItem}>👥 {course.enrolled}/{course.capacity}人</Text>
               </View>
             </View>
@@ -368,7 +346,6 @@ const CourseManagePage = () => {
         <Text className={styles.emptyState}>暂无课程，点击上方添加</Text>
       )}
 
-      {/* 底部保存按钮 */}
       <View className={styles.bottomBar}>
         <Button
           className={classnames(styles.saveBtn, (!formData.title || !formData.description) && styles.disabled)}

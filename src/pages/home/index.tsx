@@ -102,12 +102,19 @@ const HomePage = () => {
             src={userInfo?.avatar || 'https://picsum.photos/id/64/200/200'}
             mode="aspectFill"
           />
-          <Text className={styles.nickname}>{userInfo?.nickname || '同学'}</Text>
-          <View className={styles.roleTag}>
-            <Text className={styles.roleText}>
-              {userInfo?.role === 'admin' ? '管理员' : '学生'}
-            </Text>
+          <View className={styles.userText}>
+            <Text className={styles.nickname}>{userInfo?.nickname || '请登录'}</Text>
+            <View className={styles.roleTag}>
+              <Text className={styles.roleText}>
+                {userInfo?.role === 'admin' ? '管理员' : '学生'}
+              </Text>
+            </View>
           </View>
+          {!userInfo?.nickname && (
+            <View className={styles.loginBtn} onClick={() => Taro.navigateTo({ url: '/pages/register/index' })}>
+              <Text className={styles.loginBtnText}>登录</Text>
+            </View>
+          )}
         </View>
 
         {/* 统计数据 */}

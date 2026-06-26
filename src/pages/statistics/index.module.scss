@@ -3,12 +3,279 @@
 .statisticsPage {
   min-height: 100vh;
   background: $color-bg-page;
-  padding: $spacing-lg $page-padding;
+  padding-bottom: 40rpx;
 }
 
+// 头部（返回按钮+标题）
+.header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.backBtn {
+  @include button-reset;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-round;
+  font-size: $font-size-xl;
+  color: $color-primary;
+  margin-right: $spacing-lg;
+  
+  &:active {
+    background: rgba($color-primary, 0.2);
+    transform: scale(0.95);
+  }
+}
+
+.pageTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+// 统计概览卡片
+.statsOverview {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  padding-left: $page-padding;
+  
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6rpx;
+    height: 24rpx;
+    background: $color-primary;
+    border-radius: $radius-xs;
+    margin-right: $spacing-sm;
+    vertical-align: middle;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}
+
+.statCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.statIcon {
+  font-size: $font-size-xxl;
+  margin-bottom: $spacing-sm;
+}
+
+.statValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.statCard.clickable {
+  position: relative;
+  cursor: pointer;
+  
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.statArrow {
+  position: absolute;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  font-size: $font-size-xl;
+  color: $color-text-tertiary;
+}
+
+// 图表卡片
+.chartCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  margin: 0 $page-padding $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.chartTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+// 课程报名排行
+.courseRanking {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.rankItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-sm;
+}
+
+.rankNum {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-right: $spacing-md;
+  
+  &.rank1 {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  }
+  
+  &.rank2 {
+    background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+  }
+  
+  &.rank3 {
+    background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%);
+  }
+}
+
+.rankInfo {
+  flex: 1;
+}
+
+.rankTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.rankTeacher {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.rankCount {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+// 柱状图
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 200rpx;
+  padding-top: $spacing-md;
+}
+
+.barItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bar {
+  width: 40rpx;
+  background: linear-gradient(180deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-sm $radius-sm 0 0;
+  transition: height $transition-base;
+  margin-bottom: $spacing-xs;
+}
+
+.barLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+// 进度条
+.progressBarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.progressItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+}
+
+.progressLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.progressValue {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.progressBar {
+  height: 16rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-round;
+  overflow: hidden;
+  
+  .progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, $color-primary 0%, $color-primary-light 100%);
+    border-radius: $radius-round;
+    transition: width $transition-base;
+  }
+}
+
+// 空状态
+.emptyState {
+  text-align: center;
+  padding: $spacing-xl * 2;
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+// 加载状态
 .loadingText {
   text-align: center;
-  padding: $spacing-xl 0;
+  padding: $spacing-xl * 2;
   font-size: $font-size-md;
   color: $color-text-tertiary;
 }

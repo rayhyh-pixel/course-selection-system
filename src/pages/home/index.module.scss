@@ -29,22 +29,43 @@
   margin-right: $spacing-md;
 }
 
+.userText {
+  flex: 1;
+}
+
 .nickname {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $color-text-white;
-  margin-right: $spacing-md;
 }
 
 .roleTag {
   background: rgba($color-text-white, 0.2);
   padding: $spacing-xs $spacing-sm;
   border-radius: $radius-xs;
+  display: inline-block;
+  margin-top: $spacing-xs;
 }
 
 .roleText {
   font-size: $font-size-xs;
   color: $color-text-white;
+}
+
+.loginBtn {
+  background: rgba($color-text-white, 0.2);
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-md;
+  
+  &:active {
+    background: rgba($color-text-white, 0.3);
+  }
+}
+
+.loginBtnText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
 }
 
 // 统计数据卡片

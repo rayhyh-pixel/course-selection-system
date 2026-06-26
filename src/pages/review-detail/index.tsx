@@ -13,6 +13,17 @@ const ReviewDetailPage = () => {
   const [activeTab, setActiveTab] = useState<TabType>('all');
   // 申请列表
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
+  
+  // 从URL参数初始化标签
+  useEffect(() => {
+    const pages = Taro.getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    const options = (currentPage as any)?.options || {};
+    const status = options.status as TabType;
+    if (status && ['all', 'pending', 'approved', 'rejected'].includes(status)) {
+      setActiveTab(status);
+    }
+  }, []);
   // 加载状态
   const [loading, setLoading] = useState(true);
   // 拒绝弹窗
@@ -198,6 +209,10 @@ const ReviewDetailPage = () => {
   const stats = getStats();
   const list = filteredEnrollments();
 
+  const handleBack = () => {
+    Taro.navigateBack();
+  };
+
   if (loading) {
     return (
       <View className={styles.reviewDetailPage}>
@@ -208,8 +223,13 @@ const ReviewDetailPage = () => {
 
   return (
     <View className={styles.reviewDetailPage}>
-      {/* 页面标题 */}
-      <Text className={styles.pageTitle}>审核管理</Text>
+      {/* 返回按钮和标题 */}
+      <View className={styles.header}>
+        <Button className={styles.backBtn} onClick={handleBack}>
+          ←
+        </Button>
+        <Text className={styles.pageTitle}>审核管理</Text>
+      </View>
 
       {/* 统计卡片 */}
       <View className={styles.statsCard}>
@@ -255,19 +275,35 @@ const ReviewDetailPage = () => {
                 </View>
                 
                 <View className={styles.enrollInfo}>
-                  <Text className={styles.enrollInfoItem}>
-                    <Text className={styles.enrollInfoIcon}>👨‍🏫</Text>
-                    {enroll.teacher}
-                  </Text>
-                  <Text className={styles.enrollInfoItem}>
-                    <Text className={styles.enrollInfoIcon}>📅</Text>
-                    {formatDate(enroll.createTime)}
-                  </Text>
-                  {enroll.reason && (
-                    <Text className={styles.enrollInfoItem}>
-                      <Text className={styles.enrollInfoIcon}>💬</Text>
-                      原因：{enroll.reason}
+                  <View className={styles.studentSection}>
+                    <Text className={styles.studentLabel}>学生信息</Text>
+                    <Text className={styles.studentName}>{enroll.studentName}</Text>
+                    <Text className={styles.studentDetail}>
+                      <Text className={styles.enrollInfoIcon}>🆔</Text>
+                      学号：{enroll.studentId}
                     </Text>
+                    <Text className={styles.studentDetail}>
+                      <Text className={styles.enrollInfoIcon}>📱</Text>
+                      {enroll.studentPhone.replace(/(\d{3})(\d{4})(\d{4})/, '$1****$3')}
+                    </Text>
+                  </View>
+                  <View className={styles.courseSection}>
+                    <Text className={styles.courseLabel}>选课信息</Text>
+                    <Text className={styles.courseName}>{enroll.courseTitle}</Text>
+                    <Text className={styles.courseDetail}>
+                      <Text className={styles.enrollInfoIcon}>👨‍🏫</Text>
+                      授课教师：{enroll.teacher}
+                    </Text>
+                    <Text className={styles.courseDetail}>
+                      <Text className={styles.enrollInfoIcon}>📅</Text>
+                      申请时间：{formatDate(enroll.createTime)}
+                    </Text>
+                  </View>
+                  {enroll.reason && (
+                    <View className={styles.reasonSection}>
+                      <Text className={styles.reasonLabel}>拒绝原因</Text>
+                      <Text className={styles.reasonText}>{enroll.reason}</Text>
+                    </View>
                   )}
                 </View>
 

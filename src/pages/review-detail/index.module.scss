@@ -6,16 +6,40 @@
   padding-bottom: 140rpx;
 }
 
+// 头部（返回按钮+标题）
+.header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.backBtn {
+  @include button-reset;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-round;
+  font-size: $font-size-xl;
+  color: $color-primary;
+  margin-right: $spacing-lg;
+  
+  &:active {
+    background: rgba($color-primary, 0.2);
+    transform: scale(0.95);
+  }
+}
+
 // 页面标题
 .pageTitle {
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
   color: $color-text-primary;
-  padding: $spacing-lg $page-padding;
-  text-align: center;
-  background: $color-bg-card;
-  margin-bottom: $spacing-md;
-  box-shadow: $shadow-card;
 }
 
 // 标签页切换
@@ -144,20 +168,91 @@
 
 .enrollInfo {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: $spacing-md;
   margin-bottom: $spacing-sm;
 }
 
-.enrollInfoItem {
-  font-size: $font-size-xs;
-  color: $color-text-tertiary;
-  display: flex;
-  align-items: center;
-}
-
 .enrollInfoIcon {
   margin-right: $spacing-xs;
+}
+
+// 学生信息区块
+.studentSection {
+  background: rgba($color-primary, 0.05);
+  padding: $spacing-md;
+  border-radius: $radius-sm;
+}
+
+.studentLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+  display: block;
+}
+
+.studentName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  display: block;
+}
+
+.studentDetail {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+// 课程信息区块
+.courseSection {
+  background: rgba($color-success, 0.05);
+  padding: $spacing-md;
+  border-radius: $radius-sm;
+}
+
+.courseLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+  display: block;
+}
+
+.courseName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  display: block;
+}
+
+.courseDetail {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+// 拒绝原因区块
+.reasonSection {
+  background: rgba($color-error, 0.05);
+  padding: $spacing-md;
+  border-radius: $radius-sm;
+}
+
+.reasonLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+  display: block;
+}
+
+.reasonText {
+  font-size: $font-size-sm;
+  color: $color-error;
+  display: block;
 }
 
 // 操作按钮

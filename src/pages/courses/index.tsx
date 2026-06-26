@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import CourseCard from '@/components/CourseCard';
 import EmptyState from '@/components/EmptyState';
 import { CourseListItem } from '@/types';
-import { mockCourses } from '@/data/getCourses';
+import { mockCourseDetails } from '@/data/getCourseDetail';
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState<CourseListItem[]>([]);
@@ -14,12 +14,31 @@ const CoursesPage = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'open' | 'closed' | 'full'>('all');
 
-  // 加载课程列表
+  // 加载课程列表（从 localStorage 和 mock 数据合并）
   const loadCourses = async () => {
     try {
-      // H5 环境：使用 mock 数据
-      setCourses(mockCourses);
-      setFilteredCourses(mockCourses);
+      // 获取 localStorage 中的自定义课程
+      const customCoursesStr = Taro.getStorageSync('customCourses') || '[]';
+      const customCourses = JSON.parse(customCoursesStr);
+      
+      // 合并 mock 数据和自定义课程
+      const mockList = Object.values(mockCourseDetails);
+      const allCourses = [...mockList, ...customCourses];
+      
+      // 转换为 CourseListItem 格式
+      const courseList = allCourses.map(course => ({
+        _id: course._id,
+        title: course.title,
+        teacher: course.teacher,
+        capacity: course.capacity,
+        enrolled: course.enrolled,
+        startTime: course.startTime,
+        endTime: course.endTime,
+        status: course.status
+      }));
+      
+      setCourses(courseList);
+      setFilteredCourses(courseList);
       
       // 微信环境：调用云函数
       // if (process.env.TARO_ENV === 'weapp') {
@@ -35,25 +54,35 @@ const CoursesPage = () => {
       // }
     } catch (err) {
       console.error('[CoursesPage] Load courses failed:', err);
+      // 出错时使用默认 mock 数据
+      const mockList = Object.values(mockCourseDetails);
+      const courseList = mockList.map(course => ({
+        _id: course._id,
+        title: course.title,
+        teacher: course.teacher,
+        capacity: course.capacity,
+        enrolled: course.enrolled,
+        startTime: course.startTime,
+        endTime: course.endTime,
+        status: course.status
+      }));
+      setCourses(courseList);
+      setFilteredCourses(courseList);
     }
   };
 
-  // 初始化
   useEffect(() => {
     loadCourses();
   }, []);
 
-  // 下拉刷新
   usePullDownRefresh(async () => {
     await loadCourses();
     Taro.stopPullDownRefresh();
   });
 
-  // 搜索和筛选
   useEffect(() => {
     let result = courses;
     
-    // 关键词搜索
     if (searchKeyword) {
       result = result.filter(course =>
         course.title.includes(searchKeyword) ||
@@ -61,7 +90,6 @@ const CoursesPage = () => {
       );
     }
     
-    // 状态筛选
     if (statusFilter !== 'all') {
       result = result.filter(course => course.status === statusFilter);
     }
@@ -71,7 +99,6 @@ const CoursesPage = () => {
 
   return (
     <View className={styles.coursesPage}>
-      {/* 筛选栏 */}
       <View className={styles.filterBar}>
         <Input
           className={styles.searchInput}
@@ -79,32 +106,39 @@ const CoursesPage = () => {
           value={searchKeyword}
           onInput={(e) => setSearchKeyword(e.detail.value)}
         />
-        <View className={styles.statusFilter}>
-          <Button
-            className={classnames(styles.filterButton, statusFilter === 'all' && styles.active)}
-            onClick={() => setStatusFilter('all')}
-          >
-            全部
-          </Button>
-          <Button
-            className={classnames(styles.filterButton, statusFilter === 'open' && styles.active)}
-            onClick={() => setStatusFilter('open')}
-          >
-            可选
-          </Button>
-        </View>
       </View>
 
-      {/* 课程列表 */}
-      {filteredCourses.length > 0 ? (
-        <View className={styles.courseList}>
-          {filteredCourses.map(course => (
+      <View className={styles.statusFilter}>
+        {[
+          { key: 'all', label: '全部' },
+          { key: 'open', label: '可选课' },
+          { key: 'full', label: '已满员' },
+          { key: 'closed', label: '已关闭' }
+        ].map(item => (
+          <Button
+            key={item.key}
+            className={classnames(
+              styles.filterBtn,
+              statusFilter === item.key && styles.filterBtnActive
+            )}
+            onClick={() => setStatusFilter(item.key as any)}
+          >
+            {item.label}
+          </Button>
+        ))}
+      </View>
+
+      <View className={styles.courseList}>
+        {filteredCourses.length > 0 ? (
+          filteredCourses.map(course => (
             <CourseCard key={course._id} course={course} />
-          ))}
-        </View>
-      ) : (
-        <EmptyState text="没有找到符合条件的课程" />
-      )}
+          ))
+        ) : (
+          <EmptyState text="暂无课程" />
+        )}
+      </View>
+
+      <View className={styles.bottomSpace} />
     </View>
   );
 };

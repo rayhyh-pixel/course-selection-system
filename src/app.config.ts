@@ -7,7 +7,9 @@ export default defineAppConfig({
     'pages/course-detail/index',
     'pages/course-manage/index',
     'pages/review-detail/index',
-    'pages/statistics/index'
+    'pages/statistics/index',
+    'pages/student-list/index',
+    'pages/register/index'
   ],
   window: {
     backgroundTextStyle: 'light',
