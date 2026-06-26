@@ -1,0 +1,282 @@
+@use '@/styles/variables.scss' as *;
+
+.reviewDetailPage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 140rpx;
+}
+
+// 页面标题
+.pageTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  padding: $spacing-lg $page-padding;
+  text-align: center;
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+// 标签页切换
+.tabBar {
+  display: flex;
+  background: $color-bg-card;
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.tabItem {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  position: relative;
+  
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60rpx;
+      height: 6rpx;
+      background: $color-primary;
+      border-radius: $radius-round;
+    }
+  }
+}
+
+// 统计卡片
+.statsCard {
+  display: flex;
+  justify-content: space-around;
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+  margin: 0 $page-padding $spacing-md;
+  border-radius: $radius-md;
+  box-shadow: $shadow-card;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+// 申请列表
+.enrollList {
+  padding: 0 $page-padding;
+}
+
+.enrollItem {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.enrollItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-sm;
+}
+
+.enrollCourseTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  flex: 1;
+  @include text-ellipsis;
+  max-width: 400rpx;
+}
+
+.statusTag {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  
+  &.statusPending {
+    background: rgba($color-warning, 0.1);
+    color: $color-warning;
+    border: 1rpx solid rgba($color-warning, 0.3);
+  }
+  
+  &.statusApproved {
+    background: rgba($color-success, 0.1);
+    color: $color-success;
+    border: 1rpx solid rgba($color-success, 0.3);
+  }
+  
+  &.statusRejected {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+    border: 1rpx solid rgba($color-error, 0.3);
+  }
+  
+  &.statusCancelled {
+    background: rgba($color-text-disabled, 0.1);
+    color: $color-text-disabled;
+    border: 1rpx solid rgba($color-text-disabled, 0.3);
+  }
+}
+
+.enrollInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-sm;
+}
+
+.enrollInfoItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: flex;
+  align-items: center;
+}
+
+.enrollInfoIcon {
+  margin-right: $spacing-xs;
+}
+
+// 操作按钮
+.enrollActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+  padding-top: $spacing-sm;
+  border-top: 1rpx solid $color-divider;
+}
+
+.actionBtn {
+  @include button-reset;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  
+  &.approve {
+    background: linear-gradient(135deg, $color-success 0%, lighten($color-success, 10%) 100%);
+    color: $color-text-white;
+  }
+  
+  &.reject {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+    border: 1rpx solid $color-error;
+  }
+  
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+// 拒绝原因弹窗
+.rejectModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  width: 80%;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-xl;
+}
+
+.modalTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+}
+
+.modalTextarea {
+  @include button-reset;
+  width: 100%;
+  min-height: 150rpx;
+  background: $color-bg-page;
+  border: 1rpx solid $color-border;
+  border-radius: $radius-sm;
+  padding: $spacing-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  box-sizing: border-box;
+  margin-bottom: $spacing-lg;
+}
+
+.modalActions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.modalBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  
+  &.cancel {
+    background: $color-bg-hover;
+    color: $color-text-secondary;
+  }
+  
+  &.confirm {
+    background: $color-error;
+    color: $color-text-white;
+  }
+}
+
+// 空状态
+.emptyState {
+  text-align: center;
+  padding: $spacing-xl * 2;
+  
+  .emptyIcon {
+    font-size: 120rpx;
+    margin-bottom: $spacing-md;
+  }
+  
+  .emptyText {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}
+
+// 加载状态
+.loadingText {
+  text-align: center;
+  padding: $spacing-xl * 2;
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}

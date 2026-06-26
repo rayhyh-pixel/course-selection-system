@@ -1,0 +1,178 @@
+@use '@/styles/variables.scss' as *;
+
+.minePage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: $spacing-lg $page-padding;
+}
+
+// 用户信息卡片
+.userCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-card;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-lg;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.nickname {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.roleText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.switchRoleBtn {
+  @include button-reset;
+  height: $button-height-sm;
+  padding: 0 $spacing-md;
+  background: rgba($color-primary, 0.1);
+  border: 1rpx solid $color-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  color: $color-primary;
+  white-space: nowrap;
+
+  &.adminMode {
+    background: rgba($color-secondary, 0.1);
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.switchRoleBtn {
+  @include button-reset;
+  height: $button-height-sm;
+  padding: 0 $spacing-md;
+  background: rgba($color-primary, 0.1);
+  border: 1rpx solid $color-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  color: $color-primary;
+  white-space: nowrap;
+
+  &.adminMode {
+    background: rgba($color-secondary, 0.1);
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+// 选课统计
+.statsSection {
+  margin-bottom: $spacing-xl;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.statsGrid {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.statCard {
+  flex: 1;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+// 选课列表
+.enrollmentList {
+  margin-top: $spacing-md;
+}
+
+.enrollmentCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.courseTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  flex: 1;
+  @include text-ellipsis;
+  max-width: 450rpx;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+}
+
+.infoLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  min-width: 120rpx;
+}
+
+.infoValue {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  flex: 1;
+  @include text-ellipsis;
+}

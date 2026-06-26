@@ -1,0 +1,103 @@
+@use '@/styles/variables.scss' as *;
+
+.cardContainer {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.courseTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  flex: 1;
+  @include text-ellipsis;
+  max-width: 500rpx;
+}
+
+.statusTag {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  white-space: nowrap;
+  min-width: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusOpen {
+  background: rgba($color-success, 0.1);
+  border: 1rpx solid $color-success;
+}
+
+.statusClosed {
+  background: rgba($color-text-disabled, 0.1);
+  border: 1rpx solid $color-text-disabled;
+}
+
+.statusFull {
+  background: rgba($color-error, 0.1);
+  border: 1rpx solid $color-error;
+}
+
+.statusText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.statusOpen .statusText {
+  color: $color-success;
+}
+
+.statusClosed .statusText {
+  color: $color-text-disabled;
+}
+
+.statusFull .statusText {
+  color: $color-error;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+}
+
+.infoLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  min-width: 140rpx;
+}
+
+.infoValue {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  flex: 1;
+  @include text-ellipsis;
+}
+
+.remainText {
+  font-size: $font-size-xs;
+  color: $color-success;
+  margin-left: $spacing-xs;
+}

@@ -1,0 +1,79 @@
+@use '@/styles/variables.scss' as *;
+
+.tag {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  white-space: nowrap;
+  min-width: 60rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.pending {
+  background: rgba($color-warning, 0.1);
+  border: 1rpx solid $color-warning;
+  
+  .text {
+    color: $color-warning;
+  }
+}
+
+.approved {
+  background: rgba($color-success, 0.1);
+  border: 1rpx solid $color-success;
+  
+  .text {
+    color: $color-success;
+  }
+}
+
+.rejected {
+  background: rgba($color-error, 0.1);
+  border: 1rpx solid $color-error;
+  
+  .text {
+    color: $color-error;
+  }
+}
+
+.cancelled {
+  background: rgba($color-text-disabled, 0.1);
+  border: 1rpx solid $color-text-disabled;
+  
+  .text {
+    color: $color-text-disabled;
+  }
+}
+
+.open {
+  background: rgba($color-available, 0.1);
+  border: 1rpx solid $color-available;
+  
+  .text {
+    color: $color-available;
+  }
+}
+
+.closed {
+  background: rgba($color-text-disabled, 0.1);
+  border: 1rpx solid $color-text-disabled;
+  
+  .text {
+    color: $color-text-disabled;
+  }
+}
+
+.full {
+  background: rgba($color-error, 0.1);
+  border: 1rpx solid $color-error;
+  
+  .text {
+    color: $color-error;
+  }
+}

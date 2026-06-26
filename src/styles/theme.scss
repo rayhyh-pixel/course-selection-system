@@ -1,0 +1,39 @@
+// ============================================
+// 主题配色变量（选课报名系统）
+// ============================================
+
+// 品牌主题色：专业蓝，代表教育与信任
+$color-primary: #4A90E2;
+$color-primary-light: #6BA3E8;
+$color-primary-dark: #3A7BC8;
+
+// 辅助色：柔和紫，用于强调和标签
+$color-secondary: #7B68EE;
+
+// 功能色
+$color-success: #00b42a;
+$color-warning: #ff7d00;
+$color-error: #f53f3f;
+$color-info: #165dff;
+
+// 背景色
+$color-bg-page: #f5f6f7;
+$color-bg-card: #ffffff;
+$color-bg-hover: #f2f3f5;
+
+// 文本色
+$color-text-primary: #1d2129;
+$color-text-secondary: #4e5969;
+$color-text-tertiary: #86909c;
+$color-text-disabled: #c9cdd4;
+$color-text-white: #ffffff;
+
+// 边框色
+$color-border: #e5e6eb;
+$color-divider: #f2f3f5;
+
+// 业务相关变量
+$color-enrolled: #00b42a;  // 已选课
+$color-pending: #ff7d00;   // 待审核
+$color-rejected: #f53f3f;   // 已拒绝
+$color-available: #165dff; // 可选课

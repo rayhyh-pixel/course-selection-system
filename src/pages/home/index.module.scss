@@ -1,0 +1,157 @@
+@use '@/styles/variables.scss' as *;
+
+.homePage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: 0 $page-padding;
+}
+
+// 用户信息栏
+.userSection {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-lg;
+  margin: $spacing-lg (-$page-padding);
+  border-radius: 0 0 $radius-lg $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-round;
+  border: 2rpx solid $color-text-white;
+  margin-right: $spacing-md;
+}
+
+.nickname {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  margin-right: $spacing-md;
+}
+
+.roleTag {
+  background: rgba($color-text-white, 0.2);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.roleText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+// 统计数据卡片
+.statsCard {
+  background: rgba($color-text-white, 0.15);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  justify-content: space-around;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba($color-text-white, 0.8);
+}
+
+// 快速入口区域
+.quickAccessSection {
+  margin-top: $spacing-xl;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.quickAccessScroll {
+  white-space: nowrap;
+}
+
+.quickAccessItem {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 160rpx;
+  height: 160rpx;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  box-shadow: $shadow-card;
+  margin-right: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.95);
+  }
+}
+
+.quickIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.quickLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  white-space: normal;
+  text-align: center;
+}
+
+// 热门课程区域
+.hotCoursesSection {
+  margin-top: $spacing-xl;
+}
+
+.courseList {
+  margin-top: $spacing-md;
+}
+
+// 公告区域
+.noticeSection {
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-xl;
+}
+
+.noticeCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.noticeTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.noticeContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}

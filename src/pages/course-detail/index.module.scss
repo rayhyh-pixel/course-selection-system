@@ -1,0 +1,274 @@
+@use '@/styles/variables.scss' as *;
+
+.courseDetailPage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 140rpx;
+}
+
+// 顶部课程信息卡片
+.headerCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-xl $page-padding;
+  margin-bottom: $spacing-lg;
+  border-radius: 0 0 $radius-xl $radius-xl;
+  box-shadow: $shadow-card;
+}
+
+.courseTitle {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-md;
+  line-height: $line-height-normal;
+}
+
+.headerInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.categoryTag {
+  background: rgba($color-text-white, 0.2);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  
+  .categoryText {
+    font-size: $font-size-xs;
+    color: $color-text-white;
+  }
+}
+
+.statusTag {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  border: 1rpx solid rgba($color-text-white, 0.5);
+  
+  &.statusOpen {
+    background: rgba($color-success, 0.2);
+    border-color: $color-success;
+    .statusText { color: $color-success; }
+  }
+  
+  &.statusFull {
+    background: rgba($color-error, 0.2);
+    border-color: $color-error;
+    .statusText { color: $color-error; }
+  }
+  
+  &.statusClosed {
+    background: rgba($color-text-disabled, 0.2);
+    border-color: $color-text-disabled;
+    .statusText { color: $color-text-disabled; }
+  }
+}
+
+.statusText {
+  font-size: $font-size-xs;
+}
+
+// 课程详情内容
+.contentSection {
+  padding: 0 $page-padding;
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-primary;
+    border-radius: $radius-xs;
+    margin-right: $spacing-sm;
+  }
+}
+
+// 课程描述
+.descriptionText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+}
+
+// 基本信息列表
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+}
+
+.infoIcon {
+  font-size: $font-size-xl;
+  margin-right: $spacing-md;
+}
+
+.infoLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  min-width: 120rpx;
+}
+
+.infoValue {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  flex: 1;
+}
+
+// 教师信息
+.teacherCard {
+  display: flex;
+  align-items: center;
+  background: rgba($color-primary, 0.05);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.teacherAvatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-md;
+  background: $color-primary;
+}
+
+.teacherInfo {
+  flex: 1;
+}
+
+.teacherName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.teacherTitle {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.teacherIntro {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  @include text-ellipsis-multi(2);
+}
+
+// 底部操作栏
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.enrollBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-text-white;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+  
+  &.disabled {
+    background: $color-text-disabled;
+    pointer-events: none;
+  }
+  
+  &.full {
+    background: $color-error;
+  }
+  
+  &.pending {
+    background: $color-warning;
+  }
+  
+  &.approved {
+    background: $color-success;
+  }
+}
+
+// 选课人数统计
+.enrollStats {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.enrollNumber {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.enrollTotal {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.enrollProgress {
+  flex: 1;
+  height: 12rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-round;
+  overflow: hidden;
+  
+  .progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, $color-primary 0%, $color-primary-light 100%);
+    border-radius: $radius-round;
+    transition: width $transition-base;
+  }
+}
+
+// 加载状态
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl * 2;
+}
+
+.loadingText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-top: $spacing-md;
+}
